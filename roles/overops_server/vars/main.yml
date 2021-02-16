@@ -1,0 +1,4 @@
+---
+# vars file for overops_server
+
+driver_dest_path: "tomcat/webapps/ROOT/WEB-INF/lib/"
