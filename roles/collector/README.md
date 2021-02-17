@@ -18,6 +18,7 @@ Role Variables
 
 The role variables are base on the installation options described on the following doc site:
 * https://doc.overops.com/docs/collector-properties
+* Encryption: https://doc.overops.com/docs/encryption-between-overops-components
 
 The following variables are specific to the ansible role:
 

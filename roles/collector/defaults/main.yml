@@ -17,3 +17,15 @@ storage_url: 'https://s3.amazonaws.com/app-takipi-com/ConnectionTest'
 jvm_heap_size: '4G'
 listen_port: '6060'  
 server_name: '' # Defaults to hostname when empty
+
+# Advance Collector Props
+passphrase: ''
+http_proxy: ''
+https_proxy: ''
+handler_threads: ''
+handler_clients: ''
+max_disk_usage_percentage: ''
+
+enable_basic_encrypt: false
+enable_advance_encrypt: false
+encryption_key: ''

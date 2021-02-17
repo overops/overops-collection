@@ -7,9 +7,10 @@ Repo containing various ansible roles for installing OverOps Components.
 To install the collection with the `ansible-galaxy` command:
 
 ```
-$ ansible-galaxy collection install overops.overops_collection
+# Build from source
+$ ansible-galaxy collection build ./overops-collection
 
-or form an archive:
+Install from an archive:
 
 $ ansible-galaxy collection install overops-overops_collection-1.0.0.tar.gz -p ./collections
 

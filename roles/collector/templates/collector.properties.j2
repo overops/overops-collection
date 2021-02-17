@@ -6,3 +6,14 @@ takipi.storage.test.url={{ storage_url }}
 takipi.jvm.heap.size={{ jvm_heap_size }}
 takipi.listen.port={{ listen_port }}
 takipi.server.name={{ server_name }}
+
+{% if passphrase %}takipi.passphrase={{ passphrase }}{% endif %}
+{% if http_proxy %}takipi.http.proxy={{ http_proxy }}{% endif %}
+{% if https_proxy %}takipi.https.proxy={{ https_proxy }}{% endif %}
+{% if handler_threads %}takipi.handler.threads={{ handler_threads }}{% endif %}
+{% if handler_clients %}takipi.handler.clients={{ handler_clients }}{% endif %}
+{% if max_disk_usage_percentage %}maxDiskUsagePercentage={{ max_disk_usage_percentage }}{% endif %}
+
+{% if enable_basic_encrypt %}takipi.encrypt={{ enable_basic_encrypt }}{% endif %}
+{% if enable_advance_encrypt %}takipi.encrypt.fast={{ enable_advance_encrypt }}{% endif %}
+{% if encryption_key %}takipi.encrypt.key={{ encryption_key }}{% endif %}
