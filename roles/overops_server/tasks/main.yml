@@ -1,0 +1,47 @@
+---
+# tasks file for overops_server
+
+- name: "Prepare OverOps installation directory"
+  file:
+    path: "{{ installation_dir }}"
+    state: directory
+    owner: "{{ daemon_user }}"
+    group: "{{ daemon_group }}"
+  become: yes
+
+- name: "Unarchive OverOps Server Installer"
+  unarchive:
+    src: "{{ installer_location }}"
+    dest: "{{ installation_dir }}"
+    remote_src: "{{ installer_is_remote }}"
+    owner: "{{ daemon_user }}"
+    group: "{{ daemon_group }}"
+    extra_opts: "--strip-components=1"
+  become: yes
+  tags: debug
+
+- name: "Install OJBC Driver"
+  get_url:
+    dest: "{{ installation_dir }}/{{ driver_dest_path }}"
+    owner: "{{ daemon_user }}"
+    group: "{{ daemon_group }}"
+    url: "{{ ojdbc_driver_url }}"
+  when: install_drivers and db_type == 'oracle'
+
+- name: "Install MYSQL Driver"
+  get_url:
+    dest: "{{ installation_dir }}/{{ driver_dest_path }}"
+    owner: "{{ daemon_user }}"
+    group: "{{ daemon_group }}"
+    url: "{{ mysql_driver_url }}"
+  when: install_drivers and db_type == 'mysql'  
+
+- name: Include command-line args
+  include_vars:
+    file: install.yml
+
+-  name: "Run OverOps Installer"
+   command: "{{ installation_dir }}/bin/takipi-server.sh install --skip-resource-validation  -u {{ host_url }} {{ optional_args }} "
+   args:
+    chdir: "{{ installation_dir }}"
+   become: yes

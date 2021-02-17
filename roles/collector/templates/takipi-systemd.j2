@@ -1,0 +1,13 @@
+[Unit]
+Description=Takipi Collector daemon
+After=syslog.target network.target
+
+[Service]
+Type=simple
+User={{ daemon_user }}
+Group={{ daemon_group }}
+ExecStart={{ installation_dir }}/bin/takipi-service --selfrestart --noforkdaemon
+Restart=always
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,68 @@
+---
+# tasks file for collector
+
+- name: "Prepare OverOps installation directory"
+  file:
+    path: "{{ installation_dir }}"
+    state: directory
+    owner: "{{ daemon_user }}"
+    group: "{{ daemon_group }}"
+  become: yes
+
+- name: "Unarchive OverOps Collector"
+  unarchive:
+    src: "{{ installer_location }}"
+    dest: "{{ installation_dir }}"
+    remote_src: "{{ installer_is_remote }}"
+    owner: "{{ daemon_user }}"
+    group: "{{ daemon_group }}"
+    extra_opts: "--strip-components=1"
+  become: yes
+  tags: debug
+  
+- name: "Deploy collector.properties File"
+  template:
+    src: collector.properties.j2
+    dest: "{{ installation_dir }}/collector.properties"
+    owner: "{{ daemon_user }}"
+    group: "{{ daemon_group }}"
+    mode: 0644
+
+- name: "Deploy installation.key File"
+  template:
+    src: installation.key.j2
+    dest: "{{ installation_dir }}/installation.key"
+    owner: "{{ daemon_user }}"
+    group: "{{ daemon_group }}"
+    mode: 0644
+
+- name: Copy systemd unit file into place (for systemd systems).
+  template:
+    src: takipi-systemd.j2
+    dest: "/usr/lib/systemd/system/{{ daemon_name }}.service"
+    owner: root
+    group: root
+    mode: 0755
+  become: yes
+  register: systemd_result
+  when: 
+    - ansible_service_mgr == 'systemd'
+    - enable_service
+   
+- name: Run systemd daemon_reload
+  systemd:
+    name: "{{ daemon_name }}"
+    daemon_reload: true
+  become: yes    
+  when:
+    - ansible_service_mgr == 'systemd'
+    - systemd_result.changed
+    - enable_service
+
+
+- name: Enable and Start the service
+  service:
+    name: "{{ daemon_name }}"
+    enabled: true
+    state: restarted
+  when: enable_service

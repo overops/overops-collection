@@ -1,0 +1,19 @@
+---
+# defaults file for collector
+installation_key: ''
+installation_dir: '/opt/takipi'
+installer_location: 'https://app.overops.com/app/download?t=tgz'
+installer_is_remote: true
+
+daemon_user: 'overops'
+daemon_group: 'overops'
+daemon_name: 'takipi'
+enable_service: true
+
+# Collector Properties
+jvm_path: '/usr/lib/jvm'
+backend_url: 'https://backend.overops.com'
+storage_url: 'https://s3.amazonaws.com/app-takipi-com/ConnectionTest'
+jvm_heap_size: '4G'
+listen_port: '6060'  
+server_name: '' # Defaults to hostname when empty
