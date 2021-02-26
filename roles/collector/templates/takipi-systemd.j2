@@ -7,6 +7,9 @@ Type=simple
 User={{ daemon_user }}
 Group={{ daemon_group }}
 ExecStart={{ installation_dir }}/bin/takipi-service --selfrestart --noforkdaemon
+ExecStop={{ installation_dir }}/etc/takipi-stop
+SuccessExitStatus=SIGKILL
+TimeoutStopSec=2m
 Restart=always
 
 [Install]
